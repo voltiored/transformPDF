@@ -2,4 +2,3 @@ streamlit
 pdf2image
 reportlab
 pillow
-poppler-utils

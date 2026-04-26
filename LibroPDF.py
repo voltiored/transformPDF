@@ -74,10 +74,12 @@ if archivo:
                     salida = hacer_libro_bytes(archivo.read())
                     with open(salida, "rb") as f:
                         st.success("✅ PDF tipo libro generado correctamente")
+                        nombre_original = os.path.splitext(archivo.name)[0]
+                        nombre_salida = f"librito_{nombre_original}.pdf"
                         st.download_button(
                             "⬇️ Descargar PDF",
                             f,
-                            file_name="LibroPDF.pdf",
+                            file_name=nombre_salida,
                             mime="application/pdf"
                         )
                 except Exception as e:
@@ -87,4 +89,4 @@ if archivo:
                         os.remove(salida)
 
 st.markdown("---")
-st.caption("Hecho con ❤️ en Python por VoltioRed")
+st.caption("Hecho con ❤️ en Python + Streamlit")

@@ -28,41 +28,30 @@ def hacer_libro_bytes(pdf_bytes):
 
     tmp_out = tempfile.NamedTemporaryFile(delete=False, suffix=".pdf")
     c = canvas.Canvas(tmp_out.name, pagesize=landscape(A4))
-
     temp_files = []
 
     try:
         for i in range(0, len(paginas), 4):
             pares = [(i, i + 2), (i + 3, i + 1)]
-
             for izq, der in pares:
                 img_izq = tempfile.NamedTemporaryFile(delete=False, suffix=".jpg").name
                 img_der = tempfile.NamedTemporaryFile(delete=False, suffix=".jpg").name
-
                 paginas[izq].save(img_izq, "JPEG")
                 paginas[der].save(img_der, "JPEG")
-
                 temp_files.extend([img_izq, img_der])
-
                 c.drawImage(img_izq, 0, 0, ancho / 2, alto)
                 c.drawImage(img_der, ancho / 2, 0, ancho / 2, alto)
-
                 c.showPage()
-
         c.save()
         return tmp_out.name
-
     finally:
-        # limpiar imágenes temporales
         for f in temp_files:
             if os.path.exists(f):
                 os.remove(f)
 
-
 # ----------------------------
 # INTERFAZ DE USUARIO
 # ----------------------------
-
 st.set_page_config(page_title="LibroPDF", page_icon="📘", layout="centered")
 
 st.title("📘 LibroPDF")
@@ -78,30 +67,24 @@ if archivo:
         st.error("⚠️ El archivo es demasiado grande (máximo 10 MB).")
     else:
         st.info("Archivo cargado correctamente ✅")
-
         if st.button("✨ Generar PDF tipo libro"):
-            salida = None  # 👈 clave para evitar el NameError
-
+            salida = None
             with st.spinner("Procesando..."):
                 try:
                     salida = hacer_libro_bytes(archivo.read())
-
                     with open(salida, "rb") as f:
                         st.success("✅ PDF tipo libro generado correctamente")
-
                         st.download_button(
                             "⬇️ Descargar PDF",
                             f,
                             file_name="LibroPDF.pdf",
                             mime="application/pdf"
                         )
-
                 except Exception as e:
                     st.error(f"❌ Error al generar el PDF: {e}")
-
                 finally:
                     if salida and os.path.exists(salida):
                         os.remove(salida)
 
 st.markdown("---")
-st.caption("Hecho con ❤️ en Python + Streamlit")
+st.caption("Hecho con ❤️ en Python por VoltioRed")

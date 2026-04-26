@@ -247,7 +247,7 @@ archivo = st.file_uploader(
 
 if archivo:
     if archivo.size > 10 * 1024 * 1024:
-        st.error("⚠️ El archivo supera los 10 MB.")
+        st.error("⚠️ El archivo supera los 200 MB.")
     else:
         st.info(f"📄 **{archivo.name}** listo para convertir")
 
@@ -278,5 +278,5 @@ st.markdown("""
     <div class="step"><span class="step-num">③</span><span class="step-text">Imprime a doble cara</span></div>
     <div class="step"><span class="step-num">④</span><span class="step-text">Dobla y ¡listo!</span></div>
 </div>
-<div class="footer">LIBROPDF &nbsp;·&nbsp; Hecho con amor en Python + Streamlit</div>
+<div class="footer">LIBROPDF &nbsp;·&nbsp; Hecho con amor en Python por VoltioRed</div>
 """, unsafe_allow_html=True)
